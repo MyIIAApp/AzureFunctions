@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+
+namespace IIABackend
+{
+    /// <summary>
+    /// PaymentAndActivationForMembership
+    /// </summary>
+    public static class GetMissingMembershipYears
+    {
+        /// <summary>
+        /// Function
+        /// </summary>
+        /// <param name="req">request body</param>
+        /// <param name="log">logger</param>
+        /// <returns>HTTP result</returns>
+        [FunctionName("GetMissingMembershipYears")]
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            ILogger log)
+        {
+            log.LogInformation("GetMissingMembershipYears Request!");
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            string memberId = data?.memberId;
+            string phoneNumber = data?.phoneNumber;
+            dynamic userId = data?.userId;
+            LoginMetadata token = FunctionUtility.ValidateToken(req);
+            if (token == null)
+            {
+                return new UnauthorizedResult();
+            }
+
+            try
+            {
+                List<FinancialYear> yearList = new List<FinancialYear>();
+                UserProfile memberProfile = Database.GetUserProfile(userId, phoneNumber, memberId);
+                if (memberProfile.Id == -1 || memberProfile.ProfileStatus < 5)
+                {
+                    return new OkObjectResult(new BaseResponse(token, "Not a Member"));
+                }
+
+                string[] expiryYears = memberProfile.MembershipExpiryYears.Contains(",") ? memberProfile.MembershipExpiryYears.Split(",") : new string[] { memberProfile.MembershipExpiryYears };
+                int initialmemberExpiryYear = int.Parse(expiryYears[0]);
+                for (int i = 1; i <= expiryYears.Length; i++)
+                {
+                    if (i == expiryYears.Length)
+                    {
+                        int breakyears = DateTime.Now.Month < 4 ? DateTime.Now.Year-initialmemberExpiryYear : DateTime.Now.Year + 1 - initialmemberExpiryYear;
+                        while (breakyears > 0)
+                        {
+                            yearList.Add(new FinancialYear(initialmemberExpiryYear, initialmemberExpiryYear + 1));
+                            initialmemberExpiryYear += 1;
+                            breakyears -= 1;
+                        }
+                    }
+                    else
+                    {
+                        int breakyears = expiryYears[i] != string.Empty ? int.Parse(expiryYears[i]) - initialmemberExpiryYear : 0;
+                        while (breakyears > 1)
+                        {
+                            yearList.Add(new FinancialYear(initialmemberExpiryYear, initialmemberExpiryYear + 1));
+                            initialmemberExpiryYear += 1;
+                            breakyears -= 1;
+                        }
+
+                        initialmemberExpiryYear = int.Parse(expiryYears[i]);
+                    }
+                }
+
+                return new OkObjectResult(yearList);
+            }
+            catch (Exception e)
+            {
+                return new BadRequestObjectResult(new BaseResponse(token, e.Message));
+            }
+        }
+    }
+}
