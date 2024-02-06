@@ -31,18 +31,18 @@ jobs:
         run: .NET build ../IIA.sln -configuration Release --no-restore
       - name: publish 
         run: .NET publish ../IIA.sln
-      - name: 'Resolve Project Dependencies Using Dotnet'
-        shell: pwsh
-        run: |
-         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-         dotnet build --configuration Release --output ./output
-         popd
+      # - name: 'Resolve Project Dependencies Using Dotnet'
+      #   shell: pwsh
+      #   run: |
+      #    pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+      #    dotnet build --configuration Release --output ./output
+      #    popd
 
-      - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v3
-        id: fa
-        with:
-          app-name: 'IIAAzureFunctionIIA'
-          slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AF37B2FF1CF24DCC88D16817654EAB00 }}
+      # - name: 'Run Azure Functions Action'
+      #   uses: Azure/functions-action@v3
+      #   id: fa
+      #   with:
+      #     app-name: 'IIAAzureFunctionIIA'
+      #     slot-name: 'Production'
+      #     package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AF37B2FF1CF24DCC88D16817654EAB00 }}
