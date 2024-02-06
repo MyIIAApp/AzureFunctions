@@ -26,11 +26,11 @@ jobs:
           DOTNET-version: 6.0.x
 
       - name: restore
-        run: DOTNET restore ../IIA.sln
+        run: DOTNET restore .IIA/IIA.sln
       - name: build
-        run: DOTNET build ../IIA.sln -configuration Release --no-restore
+        run: DOTNET build .IIA/IIA.sln -configuration Release --no-restore
       - name: publish 
-        run: DOTNET publish ../IIA.sln
+        run: DOTNET publish .IIA/IIA.sln
       # - name: 'Resolve Project Dependencies Using Dotnet'
       #   shell: pwsh
       #   run: |
