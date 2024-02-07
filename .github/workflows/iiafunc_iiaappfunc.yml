@@ -28,7 +28,7 @@ jobs:
       - name: restore
         run: DOTNET restore ./IIA.sln
       - name: build
-        run: DOTNET build ./IIAAPIs.sln -configuration Release
+        run: DOTNET build ./IIA.sln -configuration Release --no-dependencies
       - name: publish 
         run: DOTNET publish ./IIA.sln
       # - name: 'Resolve Project Dependencies Using Dotnet'
