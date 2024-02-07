@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy dotnet core app to Azure Function App - IIAAPPFUNC
+name: Build and deploy dotnet core app to Azure Function App - IIAAzureFunctionIIA
 
 on:
   push:
     branches:
-      - IIAFUNC
+      - main
   workflow_dispatch:
 
 env:
@@ -20,23 +20,29 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
 
-      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v1
+      - name: Setup DOTNET
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          DOTNET-version: 6.0.x
 
-      - name: 'Resolve Project Dependencies Using Dotnet'
-        shell: pwsh
-        run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --output ./output
-          popd
+      - name: restore
+        run: DOTNET restore ./IIA.sln
+      - name: build
+        run: DOTNET build ./IIA.sln -configuration Release --no-restore
+      - name: publish 
+        run: DOTNET publish ./IIA.sln
+      # - name: 'Resolve Project Dependencies Using Dotnet'
+      #   shell: pwsh
+      #   run: |
+      #    pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+      #    dotnet build --configuration Release --output ./output
+      #    popd
 
-      - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v1
-        id: fa
-        with:
-          app-name: 'IIAAPPFUNC'
-          slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_978BE7DA9AA64DE5B6ACCB79DD89C54B }}
+      # - name: 'Run Azure Functions Action'
+      #   uses: Azure/functions-action@v3
+      #   id: fa
+      #   with:
+      #     app-name: 'IIAAzureFunctionIIA'
+      #     slot-name: 'Production'
+      #     package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AF37B2FF1CF24DCC88D16817654EAB00 }}
