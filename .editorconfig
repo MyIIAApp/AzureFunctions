@@ -1,0 +1,94 @@
+﻿[*.cs]
+
+# SA0001: XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1210: Using directives should be ordered alphabetically by namespace
+dotnet_diagnostic.SA1210.severity = error
+
+# SA1117: Parameters should be on same line or separate lines
+dotnet_diagnostic.SA1117.severity = error
+
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = error
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = error
+
+# SA1028: Code should not contain trailing whitespace
+dotnet_diagnostic.SA1028.severity = error
+
+# SA1411: Attribute constructor should not use unnecessary parenthesis
+dotnet_diagnostic.SA1411.severity = error
+
+# SA1206: Declaration keywords should follow order
+dotnet_diagnostic.SA1206.severity = error
+
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = error
+
+# SA1201: Elements should appear in the correct order
+dotnet_diagnostic.SA1201.severity = error
+
+# SA1009: Closing parenthesis should be spaced correctly
+dotnet_diagnostic.SA1009.severity = error
+
+# SA1012: Opening braces should be spaced correctly
+dotnet_diagnostic.SA1012.severity = error
+
+# SA1001: Commas should be spaced correctly
+dotnet_diagnostic.SA1001.severity = error
+
+# SA1122: Use string.Empty for empty strings
+dotnet_diagnostic.SA1122.severity = error
+
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = error
+
+# SA1400: Access modifier should be declared
+dotnet_diagnostic.SA1400.severity = error
+
+# SA1314: Type parameter names should begin with T
+dotnet_diagnostic.SA1314.severity = error
+
+# CS0168: Variable is declared but never used
+dotnet_diagnostic.CS0168.severity = error
+
+# SA1128: Put constructor initializers on their own line
+dotnet_diagnostic.SA1128.severity = error
+
+# SA1505: Opening braces should not be followed by blank line
+dotnet_diagnostic.SA1505.severity = error
+
+# SA1306: Field names should begin with lower-case letter
+dotnet_diagnostic.SA1306.severity = error
+
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = error
+
+# SA1208: System using directives should be placed before other using directives
+dotnet_diagnostic.SA1208.severity = error
+
+# SA1000: Keywords should be spaced correctly
+dotnet_diagnostic.SA1000.severity = error
+
+# SA1512: Single-line comments should not be followed by blank line
+dotnet_diagnostic.SA1512.severity = error
+
+# SA1013: Closing braces should be spaced correctly
+dotnet_diagnostic.SA1013.severity = error
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# SA1116: Split parameters should start on line after declaration
+dotnet_diagnostic.SA1116.severity = error
+
+# AZF0001: Avoid async void
+dotnet_diagnostic.AZF0001.severity = none
