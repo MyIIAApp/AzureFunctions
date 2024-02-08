@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy dotnet core app to Azure Function App - IIAAzureFunctionIIA
+name: Build and deploy dotnet core app to Azure Function App - IIAAPPFUNC
 
 on:
   push:
@@ -38,11 +38,11 @@ jobs:
       #    dotnet build --configuration Release --output ./output
       #    popd
 
-      # - name: 'Run Azure Functions Action'
-      #   uses: Azure/functions-action@v3
-      #   id: fa
-      #   with:
-      #     app-name: 'IIAAzureFunctionIIA'
-      #     slot-name: 'Production'
-      #     package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AF37B2FF1CF24DCC88D16817654EAB00 }}
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v3
+        id: fa
+        with:
+          app-name: 'IIAAPPFUNC'
+          slot-name: 'Production'
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AF37B2FF1CF24DCC88D16817654EAB00 }}
